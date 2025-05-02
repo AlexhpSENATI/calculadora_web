@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [showCalculator, setShowCalculator] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {!showCalculator ? (
+        // Pantalla de Bienvenida
+        <div className="welcome-container">
+          <h1>Bienvenido a la calculadora</h1>
+          <button 
+            className="start-button" 
+            onClick={() => setShowCalculator(true)}
+          >
+            Inicie aquí
+          </button>
+        </div>
+      ) : (
+        // Pantalla de Calculadora (placeholder)
+        <div className="calculator-container">
+          <h2>Calculadora</h2>
+          <p>(Aquí iría el componente de calculadora)</p>
+          <button 
+            className="back-button" 
+            onClick={() => setShowCalculator(false)}
+          >
+            Volver
+          </button>
+        </div>
+      )}
     </div>
   );
 }
