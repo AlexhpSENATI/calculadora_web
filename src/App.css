@@ -313,3 +313,42 @@ h2{
     max-height: 200px;
   }
 }
+
+
+
+/* Estilos para el header del historial */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Estilos para el botón de limpiar historial */
+.clear-history-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.clear-history-button:hover:not(:disabled) {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+}
+
+.clear-history-button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Ajuste para el título del historial */
+.history-container h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}

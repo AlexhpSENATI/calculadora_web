@@ -28,6 +28,7 @@ function App() {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('0');
   const [history, setHistory] = useState([]);
+  
 
   const clearHistory = () => {
     setHistory([]);
@@ -139,22 +140,31 @@ function App() {
             </div>
 
             <div className="history-container">
+            <div className="history-header">
               <h2>Historial de Cálculos</h2>
-              <div className="history-list">
-                {history.length === 0 ? (
-                  <p>No hay cálculos registrados</p>
-                ) : (
-                  history.slice().reverse().map((item, index) => (
-                    <div key={index} className="history-item">
-                      <div className="history-time">{item.time}</div>
-                      <div className="history-calculation">
-                        {item.input} = <strong>{item.result}</strong>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
+              <button 
+                className="clear-history-button"
+                onClick={clearHistory}
+                disabled={history.length === 0}
+              >
+                Limpiar
+              </button>
             </div>
+            <div className="history-list">
+              {history.length === 0 ? (
+                <p>No hay cálculos registrados</p>
+              ) : (
+                history.slice().reverse().map((item, index) => (
+                  <div key={index} className="history-item">
+                    <div className="history-time">{item.time}</div>
+                    <div className="history-calculation">
+                      {item.input} = <strong>{item.result}</strong>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
           </div>
 
           {/* Gráfica (solo en modo gráfico) */}
