@@ -28,7 +28,11 @@ function App() {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('0');
   const [history, setHistory] = useState([]);
-  
+
+  const clearHistory = () => {
+    setHistory([]);
+  };
+
 
   // Actualizar gráfica cuando cambia el historial
   useEffect(() => {
@@ -47,7 +51,13 @@ function App() {
         const newResult = parseFloat(evalResult.toFixed(4)).toString();
         setResult(newResult);
         setInput(newResult);
-        setHistory([...history, { input, result: newResult }]);
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        setHistory([...history, { 
+          input, 
+          result: newResult,
+          time: timeString 
+        }]);
       } catch (error) {
         setResult('Error');
       }
@@ -57,7 +67,7 @@ function App() {
   };
 
   const updateGraph = () => {
-    const lastFive = history.slice(-5); // Mostrar últimos 5 cálculos
+    const lastFive = history.slice(-5);
     return {
       labels: lastFive.map((_, index) => `Op ${index + 1}`),
       datasets: [
@@ -100,31 +110,51 @@ function App() {
         </div>
       ) : (
         <div className="main-content">
-          {/* Calculadora (siempre visible) */}
-          <div className="calculator-container">
-            <div className="calculator">
-              <div className="display">
-                <div className="input">{input || '0'}</div>
-                <div className="result">{result}</div>
+          {/* Calculadora y Historial */}
+          <div className="calculator-and-history">
+            <div className="calculator-container">
+              <div className="calculator">
+                <div className="display">
+                  <div className="input">{input || '0'}</div>
+                  <div className="result">{result}</div>
+                </div>
+                <div className="buttons">
+                  {buttons.map((btn, index) => (
+                    <button
+                      key={index}
+                      className={`button ${btn === '=' ? 'equals' : ''} ${btn === 'C' ? 'clear' : ''}`}
+                      onClick={() => handleClick(btn)}
+                    >
+                      {btn}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="buttons">
-                {buttons.map((btn, index) => (
-                  <button
-                    key={index}
-                    className={`button ${btn === '=' ? 'equals' : ''} ${btn === 'C' ? 'clear' : ''}`}
-                    onClick={() => handleClick(btn)}
-                  >
-                    {btn}
-                  </button>
-                ))}
+              <button className="back-button" onClick={() => {
+                setShowCalculator(false);
+                setShowGraph(false);
+              }}>
+                Volver
+              </button>
+            </div>
+
+            <div className="history-container">
+              <h2>Historial de Cálculos</h2>
+              <div className="history-list">
+                {history.length === 0 ? (
+                  <p>No hay cálculos registrados</p>
+                ) : (
+                  history.slice().reverse().map((item, index) => (
+                    <div key={index} className="history-item">
+                      <div className="history-time">{item.time}</div>
+                      <div className="history-calculation">
+                        {item.input} = <strong>{item.result}</strong>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
-            <button className="back-button" onClick={() => {
-              setShowCalculator(false);
-              setShowGraph(false);
-            }}>
-              Volver
-            </button>
           </div>
 
           {/* Gráfica (solo en modo gráfico) */}
