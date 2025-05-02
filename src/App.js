@@ -165,7 +165,7 @@ function App() {
               )}
             </div>
           </div>
-          </div>
+          
 
           {/* Gráfica (solo en modo gráfico) */}
           {showGraph && (
@@ -186,6 +186,7 @@ function App() {
               </div>
             </div>
           )}
+          </div>
         </div>
       )}
     </div>
